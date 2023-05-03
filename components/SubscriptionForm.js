@@ -8,6 +8,7 @@ export default function SubscriptionForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(email);
 
     if (!validate(email)) {
       setAlertClass("alert-validate");
@@ -21,9 +22,10 @@ export default function SubscriptionForm() {
       body: JSON.stringify({ email }),
     })
       .then((res) => res.text())
-      .then((data) => JSON.parse(`${data}`))
-      .then((data) =>
-        hitToast(data.message, data.success ? "success" : "error")
+      // .then((data) => JSON.parse(`${data}`))
+      .then(
+        (data) => console.log(data)
+        // hitToast(data.message, data.success ? "success" : "error")
       )
       .catch(() =>
         hitToast("Something went wrong. Please try again.", "error")
@@ -35,10 +37,10 @@ export default function SubscriptionForm() {
   const validate = (email) => {
     if (
       email
-        .trim(
+        .trim()
+        .match(
           /^([a-zA-Z0-9_\-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/
-        )
-        .match() == null
+        ) == null
     ) {
       return false;
     } else if (email.trim() === "") {
